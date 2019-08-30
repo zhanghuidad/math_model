@@ -1,0 +1,40 @@
+1.读取记事本中的数据，
+若是就一类纯数据，就直接load（'filename.xxx') over.
+若是一套数据像结构体的一样，那就用textread读取，
+[name1,name2,name3   ] = textread('fileaname.xxx','%<d,f,s ...>','读几次<3>')
+
+2.往记事本里写数据，
+ （1）读写到列向量正常的一列数据，
+	x = 100*rand(8,1); //数据
+	fileID = fopen('nums1.txt','w');  //建一个可写的文件，返回一个标识符
+	fprintf(fileID,'%4.4f\n',x); //把x数据，按照格式写进去 
+	fclose(fileID); 	//关闭文件
+	
+	%%读到列向量里
+    	% fileID = fopen('nums1.txt','r');
+	% formatSpec = '%f';
+	% A = fscanf(fileID,formatSpec);
+	%fclose(fileID);
+ (2)读写多维数组；
+	% x = 1:1:5;
+	% y = [x,rand(1,5)];
+	% fileID =fopen('nums2.txt','w')
+	% fprintf(fileID,'%d %4.4f\n',y);
+	% fclose(fileID);
+
+	% fileID = fopen('nums2.txt','r');
+	% formatSpec = '%d %f';
+	% sizeA = [2,Inf];
+	% A = fscanf(fileID,formatSpec,sizeA);
+	% A = A'
+	% fclose(fileID);
+ （3）跳过某些字符
+str = '78°C 72°C 64°C 66°C 49°C';
+fileID = fopen('temperature.txt','w');
+fprintf(fileID,'%s',str);
+fclose(fileID);
+
+fileID = fopen('temperature.txt','r');
+degrees = char(176);
+[A ,count] = fscanf(fileID,['%d' degrees 'C'])
+fclose(fileID);
